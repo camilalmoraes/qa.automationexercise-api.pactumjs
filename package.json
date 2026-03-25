@@ -1,0 +1,22 @@
+{
+    "name": "qa.automationexercise-api.pactumjs",
+    "version": "1.0.0",
+    "description": "Testes automatizados de API para o ServerRest usando PactumJS",
+    "type": "module",
+    "scripts": {
+        "test": "mocha \"project/spec/**/*.test.js\" --require config/setup.js",
+        "test:report": "mocha \"project/spec/**/*.test.js\" --require config/setup.js --reporter mocha-allure-reporter",
+        "allure:generate": "allure generate allure-results --clean -o allure-report",
+        "allure:serve": "allure serve allure-results"
+    },
+    "dependencies": {
+        "pactum": "^3.9.1"
+    },
+    "devDependencies": {
+        "@faker-js/faker": "^10.4.0",
+        "allure-commandline": "^2.38.1",
+        "joi": "^18.1.1",
+        "mocha": "^11.7.5",
+        "mocha-allure-reporter": "^1.4.0"
+    }
+}

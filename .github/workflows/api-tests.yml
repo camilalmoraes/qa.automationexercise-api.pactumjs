@@ -1,0 +1,49 @@
+name: API Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  api-tests:
+    name: Executar Testes de API
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Executar testes
+        run: npm run test:report
+
+      - name: Configurar Java (necessário para o Allure)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Instalar Allure CLI
+        run: npm install -g allure-commandline
+
+      - name: Gerar relatório Allure
+        run: npm run allure:generate
+
+      - name: Publicar relatório Allure
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
+          retention-days: 7
